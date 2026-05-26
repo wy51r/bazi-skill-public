@@ -103,6 +103,44 @@ node bin/build-bazi-json.js `
 
 生成后的 JSON 可以直接交给 `skills/bazi` 使用。
 
+### 2.1 启用真太阳时
+
+如果需要按出生地经度校正真太阳时，增加 `--use-true-solar-time`。
+
+已内置部分常见城市经度，例如北京、上海、广州、深圳、杭州、南京、合肥、成都、武汉、西安等。也可以用 `--longitude` 显式传入经度。
+
+```powershell
+node bin/build-bazi-json.js `
+  --date 2016-09-14 `
+  --time 05:50 `
+  --gender male `
+  --location "China, Hefei, Anhui, timezone Asia/Shanghai" `
+  --use-true-solar-time `
+  --target-start-year 2026 `
+  --target-year-count 3 `
+  --out ../examples/hefei-true-solar.json
+```
+
+或者显式指定经度：
+
+```powershell
+node bin/build-bazi-json.js `
+  --date 2016-09-14 `
+  --time 05:50 `
+  --gender male `
+  --longitude 117.2272 `
+  --use-true-solar-time `
+  --out ../examples/hefei-true-solar.json
+```
+
+输出 JSON 中会同时保留：
+
+```text
+meta.birth_datetime   原始北京时间
+meta.chart_datetime   真太阳时校正后用于排盘的时间
+meta.true_solar_time  经度修正、均时差和总校正分钟数
+```
+
 ### 3. 安装 Codex Skill
 
 ```powershell
@@ -212,7 +250,7 @@ POST /api/bazi/report
 ## 当前边界
 
 - 排盘依赖 `lunar-javascript`。
-- 暂未内置真太阳时换算。
+- 已支持可选真太阳时校正：经度修正 + 均时差。常见城市可自动识别，也可传 `--longitude`。
 - 五行强弱评分是工程化估算，建议产品上线前按你的门派规则复核。
 - 冲合刑害是确定性枚举，不自动判定化局成立。
 - 本项目只用于传统文化、文本生成、产品原型和研究。
@@ -234,7 +272,7 @@ skills/bazi/references/sources/
 
 ## Roadmap
 
-- [ ] 增加真太阳时校正。
+- [x] 增加真太阳时校正。
 - [ ] 增加 Web API 示例。
 - [ ] 增加 HTML / PDF 命书模板。
 - [ ] 增加更多输出模式示例。

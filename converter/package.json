@@ -7,7 +7,8 @@
     "build:female": "node bin/build-bazi-json.js --date 2001-11-16 --time 09:50 --gender female --case-id 2001-11-16-0950-female-generated --target-start-year 2026 --target-year-count 3 --out ../examples/2001-11-16-0950-female-generated.json",
     "build:male": "node bin/build-bazi-json.js --date 1987-10-29 --time 08:30 --gender male --case-id 1987-10-29-0830-male-generated --target-start-year 2026 --target-year-count 3 --out ../examples/1987-10-29-0830-male-generated.json",
     "build:minor": "node bin/build-bazi-json.js --date 2016-09-14 --time 05:50 --gender male --case-id 2016-09-14-0550-male-hefei --location \"China, Hefei, Anhui, timezone Asia/Shanghai\" --target-start-year 2026 --target-year-count 3 --out ../examples/2016-09-14-0550-male-hefei.json",
-    "test": "npm run build:female && npm run build:male && npm run build:minor"
+    "build:minor:true-solar": "node bin/build-bazi-json.js --date 2016-09-14 --time 05:50 --gender male --case-id 2016-09-14-0550-male-hefei-true-solar --location \"China, Hefei, Anhui, timezone Asia/Shanghai\" --use-true-solar-time --target-start-year 2026 --target-year-count 3 --out ../examples/2016-09-14-0550-male-hefei-true-solar.json",
+    "test": "npm run build:female && npm run build:male && npm run build:minor && npm run build:minor:true-solar"
   },
   "keywords": [],
   "author": "",

@@ -4,9 +4,13 @@
     "case_id": "1987-10-29-0830-male-generated",
     "calendar_type": "solar",
     "birth_datetime": "1987-10-29T08:30:00+08:00",
+    "chart_datetime": "1987-10-29T08:30:00+08:00",
     "gender": "male",
     "location": "China, timezone Asia/Shanghai",
-    "notes": "四柱、大运、流年由 lunar-javascript 计算；五行评分与冲合刑害由 bazi-json-builder 工程化转换器生成，建议上线前按自家排盘规则复核。"
+    "true_solar_time": {
+      "enabled": false
+    },
+    "notes": "四柱、大运、流年由 lunar-javascript 计算；未启用真太阳时校正；五行评分与冲合刑害由 bazi-json-builder 工程化转换器生成，建议上线前按自家排盘规则复核。"
   },
   "pillars": {
     "year": {

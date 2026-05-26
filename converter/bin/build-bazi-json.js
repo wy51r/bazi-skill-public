@@ -30,6 +30,9 @@ Options:
   --time HH:mm[:ss]          Required. Birth time.
   --gender male|female|男|女 Required.
   --location TEXT            Optional. Defaults to China, timezone Asia/Shanghai.
+  --use-true-solar-time      Optional. Correct chart time by longitude and equation of time.
+  --longitude DEGREE         Optional. East longitude for true solar time, e.g. 117.2272.
+  --standard-meridian DEGREE Optional. Defaults to 120 for China Standard Time.
   --case-id TEXT             Optional. Defaults to date-time-gender.
   --target-start-year YYYY   Optional. Defaults to current year.
   --target-year-count N      Optional. Defaults to 3.
@@ -74,6 +77,9 @@ const json = buildBaziJson({
   caseId: args['case-id'],
   targetStartYear: args['target-start-year'] ? Number(args['target-start-year']) : undefined,
   targetYearCount: args['target-year-count'] ? Number(args['target-year-count']) : undefined,
+  useTrueSolarTime: Boolean(args['use-true-solar-time']),
+  longitude: args.longitude,
+  standardMeridian: args['standard-meridian'] ? Number(args['standard-meridian']) : undefined,
 });
 
 const output = `${JSON.stringify(json, null, 2)}\n`;

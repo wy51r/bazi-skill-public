@@ -6,6 +6,60 @@ const ELEMENT_KEYS = { 木: 'wood', 火: 'fire', 土: 'earth', 金: 'metal', 水
 const ELEMENT_CN = { wood: '木', fire: '火', earth: '土', metal: '金', water: '水' };
 const TEN_GODS = ['比肩', '劫财', '食神', '伤官', '偏财', '正财', '七杀', '正官', '偏印', '正印'];
 
+const KNOWN_LONGITUDES = {
+  北京: 116.4074,
+  上海: 121.4737,
+  广州: 113.2644,
+  深圳: 114.0579,
+  杭州: 120.1551,
+  南京: 118.7969,
+  苏州: 120.5853,
+  合肥: 117.2272,
+  天津: 117.2000,
+  重庆: 106.5516,
+  成都: 104.0668,
+  西安: 108.9398,
+  武汉: 114.3055,
+  长沙: 112.9388,
+  郑州: 113.6254,
+  济南: 117.1201,
+  青岛: 120.3826,
+  福州: 119.2965,
+  厦门: 118.0894,
+  昆明: 102.8329,
+  南宁: 108.3669,
+  贵阳: 106.6302,
+  南昌: 115.8582,
+  太原: 112.5492,
+  石家庄: 114.5149,
+  沈阳: 123.4315,
+  大连: 121.6147,
+  长春: 125.3235,
+  哈尔滨: 126.5349,
+  呼和浩特: 111.7492,
+  兰州: 103.8343,
+  银川: 106.2309,
+  西宁: 101.7782,
+  乌鲁木齐: 87.6168,
+  拉萨: 91.1322,
+  海口: 110.1983,
+  香港: 114.1694,
+  澳门: 113.5439,
+  台北: 121.5654,
+  Hefei: 117.2272,
+  Beijing: 116.4074,
+  Shanghai: 121.4737,
+  Guangzhou: 113.2644,
+  Shenzhen: 114.0579,
+  Hangzhou: 120.1551,
+  Nanjing: 118.7969,
+  Suzhou: 120.5853,
+  Chengdu: 104.0668,
+  Chongqing: 106.5516,
+  Wuhan: 114.3055,
+  Xian: 108.9398,
+};
+
 const STEM_YINYANG = {
   甲: '阳', 乙: '阴', 丙: '阳', 丁: '阴', 戊: '阳',
   己: '阴', 庚: '阳', 辛: '阴', 壬: '阳', 癸: '阴',
@@ -86,6 +140,67 @@ const THREE_MEETINGS = [
 function splitGanZhi(ganZhi) {
   if (!ganZhi) return { stem: '', branch: '' };
   return { stem: ganZhi.slice(0, 1), branch: ganZhi.slice(1, 2) };
+}
+
+function formatDateTime(parts) {
+  return `${parts.year}-${String(parts.month).padStart(2, '0')}-${String(parts.day).padStart(2, '0')}T${String(parts.hour).padStart(2, '0')}:${String(parts.minute).padStart(2, '0')}:${String(parts.second).padStart(2, '0')}+08:00`;
+}
+
+function dayOfYear(year, month, day) {
+  const start = Date.UTC(year, 0, 1);
+  const current = Date.UTC(year, month - 1, day);
+  return Math.floor((current - start) / 86400000) + 1;
+}
+
+function equationOfTimeMinutes(year, month, day) {
+  const n = dayOfYear(year, month, day);
+  const b = (2 * Math.PI * (n - 81)) / 364;
+  return 9.87 * Math.sin(2 * b) - 7.53 * Math.cos(b) - 1.5 * Math.sin(b);
+}
+
+function resolveLongitude(location, longitude) {
+  if (longitude !== undefined && longitude !== null && longitude !== '') {
+    const parsed = Number(longitude);
+    if (Number.isFinite(parsed)) return parsed;
+    throw new Error(`Invalid longitude: ${longitude}.`);
+  }
+  if (!location) return null;
+  for (const [name, value] of Object.entries(KNOWN_LONGITUDES)) {
+    if (String(location).includes(name)) return value;
+  }
+  return null;
+}
+
+function applyTrueSolarTime({ year, month, day, hour, minute, second, location, longitude, standardMeridian }) {
+  const resolvedLongitude = resolveLongitude(location, longitude);
+  if (resolvedLongitude === null) {
+    throw new Error('True solar time requires --longitude or a recognized city name in --location.');
+  }
+
+  const eot = equationOfTimeMinutes(year, month, day);
+  const longitudeCorrection = (resolvedLongitude - standardMeridian) * 4;
+  const totalCorrection = longitudeCorrection + eot;
+  const originalMs = Date.UTC(year, month - 1, day, hour, minute, second);
+  const adjusted = new Date(originalMs + Math.round(totalCorrection * 60 * 1000));
+
+  return {
+    corrected: {
+      year: adjusted.getUTCFullYear(),
+      month: adjusted.getUTCMonth() + 1,
+      day: adjusted.getUTCDate(),
+      hour: adjusted.getUTCHours(),
+      minute: adjusted.getUTCMinutes(),
+      second: adjusted.getUTCSeconds(),
+    },
+    details: {
+      enabled: true,
+      longitude: resolvedLongitude,
+      standard_meridian: standardMeridian,
+      longitude_correction_minutes: Number(longitudeCorrection.toFixed(2)),
+      equation_of_time_minutes: Number(eot.toFixed(2)),
+      total_correction_minutes: Number(totalCorrection.toFixed(2)),
+    },
+  };
 }
 
 function sexToLibraryGender(gender) {
@@ -361,11 +476,28 @@ function buildBaziJson(input) {
     targetStartYear = new Date().getFullYear(),
     targetYearCount = 3,
     calendarType = 'solar',
+    useTrueSolarTime = false,
+    longitude,
+    standardMeridian = 120,
   } = input;
 
   if (calendarType !== 'solar') throw new Error('This converter currently accepts solar calendar input only.');
   const normalizedGender = normalizeGender(gender);
-  const solar = Solar.fromYmdHms(year, month, day, hour, minute, second);
+
+  const originalDateTime = { year, month, day, hour, minute, second };
+  const trueSolar = useTrueSolarTime
+    ? applyTrueSolarTime({ ...originalDateTime, location, longitude, standardMeridian })
+    : { corrected: originalDateTime, details: { enabled: false } };
+  const chartDateTime = trueSolar.corrected;
+
+  const solar = Solar.fromYmdHms(
+    chartDateTime.year,
+    chartDateTime.month,
+    chartDateTime.day,
+    chartDateTime.hour,
+    chartDateTime.minute,
+    chartDateTime.second,
+  );
   const lunar = solar.getLunar();
   const eightChar = lunar.getEightChar();
   const dayStem = eightChar.getDayGan();
@@ -386,10 +518,12 @@ function buildBaziJson(input) {
     meta: {
       case_id: caseId || `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}-${String(hour).padStart(2, '0')}${String(minute).padStart(2, '0')}-${normalizedGender}`,
       calendar_type: 'solar',
-      birth_datetime: `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(second).padStart(2, '0')}+08:00`,
+      birth_datetime: formatDateTime(originalDateTime),
+      chart_datetime: formatDateTime(chartDateTime),
       gender: normalizedGender,
       location,
-      notes: '四柱、大运、流年由 lunar-javascript 计算；五行评分与冲合刑害由 bazi-json-builder 工程化转换器生成，建议上线前按自家排盘规则复核。',
+      true_solar_time: trueSolar.details,
+      notes: `四柱、大运、流年由 lunar-javascript 计算；${useTrueSolarTime ? '已按真太阳时校正后的 chart_datetime 排盘；' : '未启用真太阳时校正；'}五行评分与冲合刑害由 bazi-json-builder 工程化转换器生成，建议上线前按自家排盘规则复核。`,
     },
     pillars,
     day_master: {
