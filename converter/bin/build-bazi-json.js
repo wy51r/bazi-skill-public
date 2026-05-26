@@ -23,7 +23,7 @@ function parseArgs(argv) {
 
 function usage() {
   return `Usage:
-  node bin/build-bazi-json.js --date 2001-11-16 --time 09:50 --gender female --location "China, Asia/Shanghai" --out ../bazi_cases/generated.json
+  node bin/build-bazi-json.js --date 1990-01-01 --time 12:00 --gender male --location "China, Asia/Shanghai" --out ../tmp/generated.json
 
 Options:
   --date YYYY-MM-DD          Required. Solar calendar birth date.

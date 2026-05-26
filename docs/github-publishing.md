@@ -15,7 +15,7 @@ skills/bazi/references/sources/
 ## 2. 初始化 Git
 
 ```powershell
-cd "C:\Users\32923\Documents\Codex\2026-05-21\npm-install-g-openai-codex-0\bazi-skill-public"
+cd "<你的本地路径>\bazi-skill-public"
 git init -b main
 git status
 git add .
@@ -67,19 +67,19 @@ Copy-Item -Recurse -Force "..\skills\bazi" "$env:USERPROFILE\.codex\skills\bazi"
 
 ```powershell
 node bin/build-bazi-json.js `
-  --date 2001-11-16 `
-  --time 09:50 `
-  --gender female `
+  --date 1990-01-01 `
+  --time 12:00 `
+  --gender male `
   --target-start-year 2026 `
   --target-year-count 3 `
-  --out ../examples/test.json
+  --out ../tmp/test.json
 ```
 
 ### 在 Codex 中调用
 
 ```text
 使用 $bazi，读取：
-<仓库路径>\examples\test.json
+<仓库路径>\examples\qianli-minggao-lu-friend.json
 
 请按“结构强断事件流”输出。
 ```

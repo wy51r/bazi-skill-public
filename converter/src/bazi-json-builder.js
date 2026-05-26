@@ -79,6 +79,21 @@ const MONTH_COMMAND_BRANCH_BY_JIE = {
   立冬: '亥', 大雪: '子', 小寒: '丑',
 };
 
+const SEASON_BY_BRANCH = {
+  寅: ['春', '孟春', '立春'],
+  卯: ['春', '仲春', '惊蛰'],
+  辰: ['春', '季春', '清明'],
+  巳: ['夏', '孟夏', '立夏'],
+  午: ['夏', '仲夏', '芒种'],
+  未: ['夏', '季夏', '小暑'],
+  申: ['秋', '孟秋', '立秋'],
+  酉: ['秋', '仲秋', '白露'],
+  戌: ['秋', '季秋', '寒露'],
+  亥: ['冬', '孟冬', '立冬'],
+  子: ['冬', '仲冬', '大雪'],
+  丑: ['冬', '季冬', '小寒'],
+};
+
 const STEM_COMBINATIONS = {
   甲己: ['甲己合', '土'], 己甲: ['甲己合', '土'],
   乙庚: ['乙庚合', '金'], 庚乙: ['乙庚合', '金'],
@@ -230,6 +245,10 @@ function elementOfBranch(branch) {
   return LunarUtil.WU_XING_ZHI[branch] || '';
 }
 
+function naYinOf(ganZhi) {
+  return LunarUtil.NAYIN[ganZhi] || '';
+}
+
 function buildPillar(ganZhi, tenGodName, naYin) {
   const { stem, branch } = splitGanZhi(ganZhi);
   return {
@@ -270,6 +289,20 @@ function buildSolarTerms(lunar, solar) {
     season,
     month_phase: monthPhase,
     month_command_branch: MONTH_COMMAND_BRANCH_BY_JIE[monthJie] || lunar.getMonthZhiExact(),
+  };
+}
+
+function buildSolarTermsFromMonthBranch(monthBranch) {
+  const [season = '', monthPhase = '', monthJieqi = ''] = SEASON_BY_BRANCH[monthBranch] || [];
+  return {
+    month_jieqi: monthJieqi,
+    next_jieqi: '',
+    days_from_previous_jieqi: null,
+    days_to_next_jieqi: null,
+    season,
+    month_phase: monthPhase,
+    month_command_branch: monthBranch,
+    note: '古籍命例仅提供四柱，未提供公历生日和精确节气时间；此处按月柱地支推定月令。',
   };
 }
 
@@ -550,4 +583,98 @@ function buildBaziJson(input) {
   };
 }
 
-module.exports = { buildBaziJson };
+function normalizePillar(value, label) {
+  const text = String(value || '').trim().replace('戍', '戌');
+  const { stem, branch } = splitGanZhi(text);
+  if (!STEMS.includes(stem) || !BRANCHES.includes(branch) || text.length < 2) {
+    throw new Error(`Invalid ${label} pillar: ${value}. Expected format like 乙巳.`);
+  }
+  return `${stem}${branch}`;
+}
+
+function buildBaziJsonFromPillars(input) {
+  const {
+    yearPillar,
+    monthPillar,
+    dayPillar,
+    hourPillar,
+    gender,
+    caseId,
+    sourceTitle = '千里命稿',
+    sourceNote = '',
+    sourceExcerpt = '',
+  } = input;
+
+  const normalizedGender = normalizeGender(gender);
+  const raw = {
+    year: normalizePillar(yearPillar, 'year'),
+    month: normalizePillar(monthPillar, 'month'),
+    day: normalizePillar(dayPillar, 'day'),
+    hour: normalizePillar(hourPillar, 'hour'),
+  };
+  const dayStem = splitGanZhi(raw.day).stem;
+  const monthBranch = splitGanZhi(raw.month).branch;
+
+  const pillars = {
+    year: buildPillar(raw.year, tenGod(dayStem, splitGanZhi(raw.year).stem), naYinOf(raw.year)),
+    month: buildPillar(raw.month, tenGod(dayStem, splitGanZhi(raw.month).stem), naYinOf(raw.month)),
+    day: buildPillar(raw.day, '日主', naYinOf(raw.day)),
+    hour: buildPillar(raw.hour, tenGod(dayStem, splitGanZhi(raw.hour).stem), naYinOf(raw.hour)),
+  };
+
+  const solarTerms = buildSolarTermsFromMonthBranch(monthBranch);
+  const visibleStems = Object.values(pillars).map((p) => p.stem);
+  const allHiddenStems = Object.values(pillars).flatMap((p) => p.hidden_stems);
+
+  return {
+    schema_version: 'bazi.input.v1',
+    meta: {
+      case_id: caseId || `classical-${raw.year}${raw.month}${raw.day}${raw.hour}-${normalizedGender}`,
+      calendar_type: 'classical_case_pillars_only',
+      birth_datetime: null,
+      chart_datetime: null,
+      gender: normalizedGender,
+      location: 'classical source',
+      source_title: sourceTitle,
+      source_note: sourceNote,
+      source_excerpt: sourceExcerpt,
+      true_solar_time: {
+        enabled: false,
+        note: '古籍四柱命例无公历生日和出生地，无法进行真太阳时校正。',
+      },
+      notes: '此 JSON 由古籍四柱命例生成，仅用于公开示例和 skill 输出测试；未包含真实现代个人出生信息，也不包含精确起运和流年。',
+    },
+    pillars,
+    day_master: {
+      stem: dayStem,
+      element: elementOfStem(dayStem),
+      yinyang: STEM_YINYANG[dayStem] || '',
+    },
+    solar_terms: solarTerms,
+    five_elements: buildFiveElements(pillars, solarTerms.month_command_branch),
+    relations: buildRelations(pillars),
+    ten_gods: {
+      visible: groupTenGods(dayStem, visibleStems),
+      hidden: groupTenGods(dayStem, allHiddenStems),
+    },
+    luck: {
+      start_age: null,
+      start_age_note: '古籍命例未提供公历生日、出生地和节气分钟，无法可靠计算起运。',
+      direction: 'unknown',
+      direction_note: '仅凭四柱和性别不足以复原完整起运；产品使用时请用出生信息重新排盘。',
+      dayun: [],
+      current_dayun: {},
+      target_years: [],
+    },
+    analysis_options: {
+      style: '明确断法',
+      style_profile: 'classical_case',
+      include_source_lenses: true,
+      include_disagreement_notes: true,
+      generate_mingshu: true,
+      source_note: '公开示例来自古籍四柱命例；大运流年不在此 JSON 中复原，输出时应避免伪造精确应期。',
+    },
+  };
+}
+
+module.exports = { buildBaziJson, buildBaziJsonFromPillars };

@@ -22,9 +22,9 @@ converter/
 
 ```json
 {
-  "date": "2001-11-16",
-  "time": "09:50",
-  "gender": "female",
+  "date": "1990-01-01",
+  "time": "12:00",
+  "gender": "male",
   "location": "China, timezone Asia/Shanghai"
 }
 ```
@@ -63,9 +63,9 @@ POST /api/bazi/report
 
 ```json
 {
-  "birth_date": "2001-11-16",
-  "birth_time": "09:50",
-  "gender": "female",
+  "birth_date": "1990-01-01",
+  "birth_time": "12:00",
+  "gender": "male",
   "location": "China, Shanghai",
   "use_true_solar_time": false,
   "target_start_year": 2026,

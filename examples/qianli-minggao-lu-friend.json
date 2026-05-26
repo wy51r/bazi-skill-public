@@ -1,0 +1,258 @@
+{
+  "schema_version": "bazi.input.v1",
+  "meta": {
+    "case_id": "qianli-minggao-lu-friend",
+    "calendar_type": "classical_case_pillars_only",
+    "birth_datetime": null,
+    "chart_datetime": null,
+    "gender": "male",
+    "location": "classical source",
+    "source_title": "千里命稿",
+    "source_note": "《千里命稿》陆维屏君友人命例，原文作：为乙巳甲申癸未丙辰。",
+    "source_excerpt": "",
+    "true_solar_time": {
+      "enabled": false,
+      "note": "古籍四柱命例无公历生日和出生地，无法进行真太阳时校正。"
+    },
+    "notes": "此 JSON 由古籍四柱命例生成，仅用于公开示例和 skill 输出测试；未包含真实现代个人出生信息，也不包含精确起运和流年。"
+  },
+  "pillars": {
+    "year": {
+      "stem": "乙",
+      "branch": "巳",
+      "stem_yinyang": "阴",
+      "stem_element": "木",
+      "branch_element": "火",
+      "hidden_stems": [
+        "丙",
+        "庚",
+        "戊"
+      ],
+      "ten_god": "食神",
+      "nayin": "覆灯火"
+    },
+    "month": {
+      "stem": "甲",
+      "branch": "申",
+      "stem_yinyang": "阳",
+      "stem_element": "木",
+      "branch_element": "金",
+      "hidden_stems": [
+        "庚",
+        "壬",
+        "戊"
+      ],
+      "ten_god": "伤官",
+      "nayin": "泉中水"
+    },
+    "day": {
+      "stem": "癸",
+      "branch": "未",
+      "stem_yinyang": "阴",
+      "stem_element": "水",
+      "branch_element": "土",
+      "hidden_stems": [
+        "己",
+        "丁",
+        "乙"
+      ],
+      "ten_god": "日主",
+      "nayin": "杨柳木"
+    },
+    "hour": {
+      "stem": "丙",
+      "branch": "辰",
+      "stem_yinyang": "阳",
+      "stem_element": "火",
+      "branch_element": "土",
+      "hidden_stems": [
+        "戊",
+        "乙",
+        "癸"
+      ],
+      "ten_god": "正财",
+      "nayin": "沙中土"
+    }
+  },
+  "day_master": {
+    "stem": "癸",
+    "element": "水",
+    "yinyang": "阴"
+  },
+  "solar_terms": {
+    "month_jieqi": "立秋",
+    "next_jieqi": "",
+    "days_from_previous_jieqi": null,
+    "days_to_next_jieqi": null,
+    "season": "秋",
+    "month_phase": "孟秋",
+    "month_command_branch": "申",
+    "note": "古籍命例仅提供四柱，未提供公历生日和精确节气时间；此处按月柱地支推定月令。"
+  },
+  "five_elements": {
+    "wood": {
+      "score": 26,
+      "roots": [
+        "未藏乙",
+        "辰藏乙"
+      ],
+      "visible_stems": [
+        "乙",
+        "甲"
+      ],
+      "comments": "木分数为转换器工程化估算，用于辅助 skill 判读；正式产品可替换为自定义旺衰算法。",
+      "state": "偏旺"
+    },
+    "fire": {
+      "score": 28,
+      "roots": [
+        "year:巳",
+        "巳藏丙",
+        "未藏丁"
+      ],
+      "visible_stems": [
+        "丙"
+      ],
+      "comments": "火分数为转换器工程化估算，用于辅助 skill 判读；正式产品可替换为自定义旺衰算法。",
+      "state": "偏旺"
+    },
+    "earth": {
+      "score": 36,
+      "roots": [
+        "巳藏戊",
+        "申藏戊",
+        "day:未",
+        "未藏己",
+        "hour:辰",
+        "辰藏戊"
+      ],
+      "visible_stems": [],
+      "comments": "土分数为转换器工程化估算，用于辅助 skill 判读；正式产品可替换为自定义旺衰算法。",
+      "state": "极旺"
+    },
+    "metal": {
+      "score": 28,
+      "roots": [
+        "巳藏庚",
+        "month:申",
+        "申藏庚"
+      ],
+      "visible_stems": [],
+      "comments": "金分数为转换器工程化估算，用于辅助 skill 判读；正式产品可替换为自定义旺衰算法。",
+      "state": "偏旺"
+    },
+    "water": {
+      "score": 16,
+      "roots": [
+        "申藏壬",
+        "辰藏癸"
+      ],
+      "visible_stems": [
+        "癸"
+      ],
+      "comments": "水分数为转换器工程化估算，用于辅助 skill 判读；正式产品可替换为自定义旺衰算法。",
+      "state": "有力"
+    }
+  },
+  "relations": {
+    "stem_combinations": [],
+    "branch_combinations": [
+      {
+        "pair": [
+          "年支巳",
+          "月支申"
+        ],
+        "type": "巳申合",
+        "transform_element": "水",
+        "is_transformed": false,
+        "reason": "转换器仅标注六合，不自动判定化局成立。"
+      }
+    ],
+    "branch_clashes": [],
+    "branch_punishments": [],
+    "branch_harms": [],
+    "branch_breaks": [
+      {
+        "pair": [
+          "年支巳",
+          "月支申"
+        ],
+        "type": "巳申破",
+        "effect": "地支相破，主结构破损、关系失衡或计划反复。"
+      }
+    ],
+    "three_meetings": [],
+    "three_harmonies": []
+  },
+  "ten_gods": {
+    "visible": {
+      "比肩": [
+        "癸"
+      ],
+      "劫财": [],
+      "食神": [
+        "乙"
+      ],
+      "伤官": [
+        "甲"
+      ],
+      "偏财": [],
+      "正财": [
+        "丙"
+      ],
+      "七杀": [],
+      "正官": [],
+      "偏印": [],
+      "正印": []
+    },
+    "hidden": {
+      "比肩": [
+        "癸"
+      ],
+      "劫财": [
+        "壬"
+      ],
+      "食神": [
+        "乙",
+        "乙"
+      ],
+      "伤官": [],
+      "偏财": [
+        "丁"
+      ],
+      "正财": [
+        "丙"
+      ],
+      "七杀": [
+        "己"
+      ],
+      "正官": [
+        "戊",
+        "戊",
+        "戊"
+      ],
+      "偏印": [],
+      "正印": [
+        "庚",
+        "庚"
+      ]
+    }
+  },
+  "luck": {
+    "start_age": null,
+    "start_age_note": "古籍命例未提供公历生日、出生地和节气分钟，无法可靠计算起运。",
+    "direction": "unknown",
+    "direction_note": "仅凭四柱和性别不足以复原完整起运；产品使用时请用出生信息重新排盘。",
+    "dayun": [],
+    "current_dayun": {},
+    "target_years": []
+  },
+  "analysis_options": {
+    "style": "明确断法",
+    "style_profile": "classical_case",
+    "include_source_lenses": true,
+    "include_disagreement_notes": true,
+    "generate_mingshu": true,
+    "source_note": "公开示例来自古籍四柱命例；大运流年不在此 JSON 中复原，输出时应避免伪造精确应期。"
+  }
+}

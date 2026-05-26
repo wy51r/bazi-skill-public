@@ -1,0 +1,233 @@
+{
+  "schema_version": "bazi.input.v1",
+  "meta": {
+    "case_id": "qianli-minggao-du-son-in-law",
+    "calendar_type": "classical_case_pillars_only",
+    "birth_datetime": null,
+    "chart_datetime": null,
+    "gender": "male",
+    "location": "classical source",
+    "source_title": "千里命稿",
+    "source_note": "《千里命稿》杜霭移先生择婿命例，原文作：婿命为戊申甲子戊戍戊午；转换器已将戍规范为戌。",
+    "source_excerpt": "",
+    "true_solar_time": {
+      "enabled": false,
+      "note": "古籍四柱命例无公历生日和出生地，无法进行真太阳时校正。"
+    },
+    "notes": "此 JSON 由古籍四柱命例生成，仅用于公开示例和 skill 输出测试；未包含真实现代个人出生信息，也不包含精确起运和流年。"
+  },
+  "pillars": {
+    "year": {
+      "stem": "戊",
+      "branch": "申",
+      "stem_yinyang": "阳",
+      "stem_element": "土",
+      "branch_element": "金",
+      "hidden_stems": [
+        "庚",
+        "壬",
+        "戊"
+      ],
+      "ten_god": "比肩",
+      "nayin": "大驿土"
+    },
+    "month": {
+      "stem": "甲",
+      "branch": "子",
+      "stem_yinyang": "阳",
+      "stem_element": "木",
+      "branch_element": "水",
+      "hidden_stems": [
+        "癸"
+      ],
+      "ten_god": "七杀",
+      "nayin": "海中金"
+    },
+    "day": {
+      "stem": "戊",
+      "branch": "戌",
+      "stem_yinyang": "阳",
+      "stem_element": "土",
+      "branch_element": "土",
+      "hidden_stems": [
+        "戊",
+        "辛",
+        "丁"
+      ],
+      "ten_god": "日主",
+      "nayin": "平地木"
+    },
+    "hour": {
+      "stem": "戊",
+      "branch": "午",
+      "stem_yinyang": "阳",
+      "stem_element": "土",
+      "branch_element": "火",
+      "hidden_stems": [
+        "丁",
+        "己"
+      ],
+      "ten_god": "比肩",
+      "nayin": "天上火"
+    }
+  },
+  "day_master": {
+    "stem": "戊",
+    "element": "土",
+    "yinyang": "阳"
+  },
+  "solar_terms": {
+    "month_jieqi": "大雪",
+    "next_jieqi": "",
+    "days_from_previous_jieqi": null,
+    "days_to_next_jieqi": null,
+    "season": "冬",
+    "month_phase": "仲冬",
+    "month_command_branch": "子",
+    "note": "古籍命例仅提供四柱，未提供公历生日和精确节气时间；此处按月柱地支推定月令。"
+  },
+  "five_elements": {
+    "wood": {
+      "score": 10,
+      "roots": [],
+      "visible_stems": [
+        "甲"
+      ],
+      "comments": "木分数为转换器工程化估算，用于辅助 skill 判读；正式产品可替换为自定义旺衰算法。",
+      "state": "偏弱"
+    },
+    "fire": {
+      "score": 18,
+      "roots": [
+        "戌藏丁",
+        "hour:午",
+        "午藏丁"
+      ],
+      "visible_stems": [],
+      "comments": "火分数为转换器工程化估算，用于辅助 skill 判读；正式产品可替换为自定义旺衰算法。",
+      "state": "有力"
+    },
+    "earth": {
+      "score": 51,
+      "roots": [
+        "申藏戊",
+        "day:戌",
+        "戌藏戊",
+        "午藏己"
+      ],
+      "visible_stems": [
+        "戊",
+        "戊",
+        "戊"
+      ],
+      "comments": "土分数为转换器工程化估算，用于辅助 skill 判读；正式产品可替换为自定义旺衰算法。",
+      "state": "极旺"
+    },
+    "metal": {
+      "score": 18,
+      "roots": [
+        "year:申",
+        "申藏庚",
+        "戌藏辛"
+      ],
+      "visible_stems": [],
+      "comments": "金分数为转换器工程化估算，用于辅助 skill 判读；正式产品可替换为自定义旺衰算法。",
+      "state": "有力"
+    },
+    "water": {
+      "score": 28,
+      "roots": [
+        "申藏壬",
+        "month:子",
+        "子藏癸"
+      ],
+      "visible_stems": [],
+      "comments": "水分数为转换器工程化估算，用于辅助 skill 判读；正式产品可替换为自定义旺衰算法。",
+      "state": "偏旺"
+    }
+  },
+  "relations": {
+    "stem_combinations": [],
+    "branch_combinations": [],
+    "branch_clashes": [
+      {
+        "pair": [
+          "月支子",
+          "时支午"
+        ],
+        "type": "子午冲",
+        "effect": "地支相冲，主对应宫位和藏干所代表事项被引动。"
+      }
+    ],
+    "branch_punishments": [],
+    "branch_harms": [],
+    "branch_breaks": [],
+    "three_meetings": [],
+    "three_harmonies": []
+  },
+  "ten_gods": {
+    "visible": {
+      "比肩": [
+        "戊",
+        "戊",
+        "戊"
+      ],
+      "劫财": [],
+      "食神": [],
+      "伤官": [],
+      "偏财": [],
+      "正财": [],
+      "七杀": [
+        "甲"
+      ],
+      "正官": [],
+      "偏印": [],
+      "正印": []
+    },
+    "hidden": {
+      "比肩": [
+        "戊",
+        "戊"
+      ],
+      "劫财": [
+        "己"
+      ],
+      "食神": [
+        "庚"
+      ],
+      "伤官": [
+        "辛"
+      ],
+      "偏财": [
+        "壬"
+      ],
+      "正财": [
+        "癸"
+      ],
+      "七杀": [],
+      "正官": [],
+      "偏印": [],
+      "正印": [
+        "丁",
+        "丁"
+      ]
+    }
+  },
+  "luck": {
+    "start_age": null,
+    "start_age_note": "古籍命例未提供公历生日、出生地和节气分钟，无法可靠计算起运。",
+    "direction": "unknown",
+    "direction_note": "仅凭四柱和性别不足以复原完整起运；产品使用时请用出生信息重新排盘。",
+    "dayun": [],
+    "current_dayun": {},
+    "target_years": []
+  },
+  "analysis_options": {
+    "style": "明确断法",
+    "style_profile": "classical_case",
+    "include_source_lenses": true,
+    "include_disagreement_notes": true,
+    "generate_mingshu": true,
+    "source_note": "公开示例来自古籍四柱命例；大运流年不在此 JSON 中复原，输出时应避免伪造精确应期。"
+  }
+}

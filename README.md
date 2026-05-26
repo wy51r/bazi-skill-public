@@ -92,45 +92,61 @@ npm install
 
 ```powershell
 node bin/build-bazi-json.js `
-  --date 2001-11-16 `
-  --time 09:50 `
-  --gender female `
+  --date 1990-01-01 `
+  --time 12:00 `
+  --gender male `
   --location "China, timezone Asia/Shanghai" `
   --target-start-year 2026 `
   --target-year-count 3 `
-  --out ../examples/test.json
+  --out ../tmp/test.json
 ```
 
 生成后的 JSON 可以直接交给 `skills/bazi` 使用。
 
-### 2.1 启用真太阳时
+### 2.1 生成《千里命稿》公开命例
 
-如果需要按出生地经度校正真太阳时，增加 `--use-true-solar-time`。
+仓库内置示例不使用现代个人出生信息，改用《千里命稿》中的公开四柱命例：
+
+```powershell
+node bin/build-bazi-json-from-pillars.js `
+  --pillars "乙巳 甲申 癸未 丙辰" `
+  --gender male `
+  --case-id qianli-minggao-lu-friend `
+  --source-title "千里命稿" `
+  --source-note "《千里命稿》陆维屏君友人命例，原文作：为乙巳甲申癸未丙辰。" `
+  --out ../examples/qianli-minggao-lu-friend.json
+```
+
+四柱命例只适合做公开示例和输出测试。因为古籍未给出现代公历生日、出生地和节气分钟，转换器不会伪造真太阳时、起运和完整流年。
+
+### 2.2 启用真太阳时
+
+如果需要按真实用户授权提供的出生地经度校正真太阳时，增加 `--use-true-solar-time`。
 
 已内置部分常见城市经度，例如北京、上海、广州、深圳、杭州、南京、合肥、成都、武汉、西安等。也可以用 `--longitude` 显式传入经度。
 
 ```powershell
 node bin/build-bazi-json.js `
-  --date 2016-09-14 `
-  --time 05:50 `
+  --date 1990-01-01 `
+  --time 12:00 `
   --gender male `
   --location "China, Hefei, Anhui, timezone Asia/Shanghai" `
   --use-true-solar-time `
   --target-start-year 2026 `
   --target-year-count 3 `
-  --out ../examples/hefei-true-solar.json
+  --out ../tmp/hefei-true-solar.json
 ```
 
 或者显式指定经度：
 
 ```powershell
 node bin/build-bazi-json.js `
-  --date 2016-09-14 `
-  --time 05:50 `
+  --date 1990-01-01 `
+  --time 12:00 `
   --gender male `
   --longitude 117.2272 `
   --use-true-solar-time `
-  --out ../examples/hefei-true-solar.json
+  --out ../tmp/hefei-true-solar.json
 ```
 
 输出 JSON 中会同时保留：
@@ -202,7 +218,7 @@ Copy-Item -Recurse -Force ".\skills\bazi" "$env:USERPROFILE\.codex\skills\bazi"
 
 ```text
 使用 $bazi，读取：
-examples/1987-10-29-0830-male-generated.json
+examples/qianli-minggao-lu-friend.json
 
 请按“结构强断事件流”输出。
 要求先定盘，每个判断给出命理触发、现实落点、强断，语气尖锐直接。
@@ -236,9 +252,9 @@ POST /api/bazi/report
 
 ```json
 {
-  "birth_date": "2001-11-16",
-  "birth_time": "09:50",
-  "gender": "female",
+  "birth_date": "1990-01-01",
+  "birth_time": "12:00",
+  "gender": "male",
   "location": "China, Shanghai",
   "use_true_solar_time": false,
   "target_start_year": 2026,

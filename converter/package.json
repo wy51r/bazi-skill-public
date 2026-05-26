@@ -4,11 +4,9 @@
   "description": "Build bazi.input.v1 JSON from birth info using lunar-javascript.",
   "main": "src/bazi-json-builder.js",
   "scripts": {
-    "build:female": "node bin/build-bazi-json.js --date 2001-11-16 --time 09:50 --gender female --case-id 2001-11-16-0950-female-generated --target-start-year 2026 --target-year-count 3 --out ../examples/2001-11-16-0950-female-generated.json",
-    "build:male": "node bin/build-bazi-json.js --date 1987-10-29 --time 08:30 --gender male --case-id 1987-10-29-0830-male-generated --target-start-year 2026 --target-year-count 3 --out ../examples/1987-10-29-0830-male-generated.json",
-    "build:minor": "node bin/build-bazi-json.js --date 2016-09-14 --time 05:50 --gender male --case-id 2016-09-14-0550-male-hefei --location \"China, Hefei, Anhui, timezone Asia/Shanghai\" --target-start-year 2026 --target-year-count 3 --out ../examples/2016-09-14-0550-male-hefei.json",
-    "build:minor:true-solar": "node bin/build-bazi-json.js --date 2016-09-14 --time 05:50 --gender male --case-id 2016-09-14-0550-male-hefei-true-solar --location \"China, Hefei, Anhui, timezone Asia/Shanghai\" --use-true-solar-time --target-start-year 2026 --target-year-count 3 --out ../examples/2016-09-14-0550-male-hefei-true-solar.json",
-    "test": "npm run build:female && npm run build:male && npm run build:minor && npm run build:minor:true-solar"
+    "build:qianli-lu-friend": "node bin/build-bazi-json-from-pillars.js --pillars \"乙巳 甲申 癸未 丙辰\" --gender male --case-id qianli-minggao-lu-friend --source-title \"千里命稿\" --source-note \"《千里命稿》陆维屏君友人命例，原文作：为乙巳甲申癸未丙辰。\" --out ../examples/qianli-minggao-lu-friend.json",
+    "build:qianli-du-son-in-law": "node bin/build-bazi-json-from-pillars.js --pillars \"戊申 甲子 戊戌 戊午\" --gender male --case-id qianli-minggao-du-son-in-law --source-title \"千里命稿\" --source-note \"《千里命稿》杜霭移先生择婿命例，原文作：婿命为戊申甲子戊戍戊午；转换器已将戍规范为戌。\" --out ../examples/qianli-minggao-du-son-in-law.json",
+    "test": "npm run build:qianli-lu-friend && npm run build:qianli-du-son-in-law"
   },
   "keywords": [],
   "author": "",
