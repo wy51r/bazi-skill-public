@@ -1,0 +1,105 @@
+{
+  "schema_version": "bazi.input.v1",
+  "meta": {
+    "case_id": "sample-001",
+    "calendar_type": "solar",
+    "birth_datetime": "1990-01-01T08:30:00+08:00",
+    "gender": "male",
+    "location": "Beijing, China",
+    "notes": "Synthetic example for skill validation."
+  },
+  "pillars": {
+    "year": {
+      "stem": "己",
+      "branch": "巳",
+      "stem_yinyang": "阴",
+      "stem_element": "土",
+      "branch_element": "火",
+      "hidden_stems": ["丙", "戊", "庚"],
+      "ten_god": "正财",
+      "nayin": ""
+    },
+    "month": {
+      "stem": "丙",
+      "branch": "子",
+      "stem_yinyang": "阳",
+      "stem_element": "火",
+      "branch_element": "水",
+      "hidden_stems": ["癸"],
+      "ten_god": "食神",
+      "nayin": ""
+    },
+    "day": {
+      "stem": "甲",
+      "branch": "寅",
+      "stem_yinyang": "阳",
+      "stem_element": "木",
+      "branch_element": "木",
+      "hidden_stems": ["甲", "丙", "戊"],
+      "ten_god": "日主",
+      "nayin": ""
+    },
+    "hour": {
+      "stem": "戊",
+      "branch": "辰",
+      "stem_yinyang": "阳",
+      "stem_element": "土",
+      "branch_element": "土",
+      "hidden_stems": ["戊", "乙", "癸"],
+      "ten_god": "偏财",
+      "nayin": ""
+    }
+  },
+  "day_master": {
+    "stem": "甲",
+    "element": "木",
+    "yinyang": "阳"
+  },
+  "solar_terms": {
+    "month_jieqi": "大雪",
+    "next_jieqi": "小寒",
+    "days_from_previous_jieqi": 12,
+    "days_to_next_jieqi": 18,
+    "season": "冬",
+    "month_phase": "仲冬"
+  },
+  "five_elements": {
+    "wood": {"score": 25, "state": "有根", "roots": ["寅", "辰藏乙"], "visible_stems": ["甲"], "comments": ""},
+    "fire": {"score": 18, "state": "失令有透", "roots": ["巳", "寅藏丙"], "visible_stems": ["丙"], "comments": ""},
+    "earth": {"score": 24, "state": "透而有根", "roots": ["辰", "巳藏戊", "寅藏戊"], "visible_stems": ["己", "戊"], "comments": ""},
+    "metal": {"score": 5, "state": "弱藏", "roots": ["巳藏庚"], "visible_stems": [], "comments": ""},
+    "water": {"score": 28, "state": "当令", "roots": ["子", "辰藏癸"], "visible_stems": [], "comments": ""}
+  },
+  "relations": {
+    "stem_combinations": [
+      {"pair": ["己", "甲"], "type": "甲己合", "transform_element": "土", "is_transformed": false, "reason": "化神条件不足"}
+    ],
+    "branch_combinations": [],
+    "branch_clashes": [],
+    "branch_punishments": [],
+    "branch_harms": [],
+    "branch_breaks": [],
+    "three_meetings": [],
+    "three_harmonies": []
+  },
+  "ten_gods": {
+    "visible": {"比肩": ["甲"], "食神": ["丙"], "正财": ["己"], "偏财": ["戊"], "正印": []},
+    "hidden": {"正印": ["癸"], "七杀": ["庚"], "劫财": ["乙"]}
+  },
+  "luck": {
+    "start_age": 6,
+    "direction": "forward",
+    "dayun": [
+      {"index": 1, "age_range": [6, 15], "pillar": "丁丑", "stem": "丁", "branch": "丑", "ten_god_stem": "伤官", "hidden_stems": ["己", "癸", "辛"]}
+    ],
+    "current_dayun": {"age_range": [36, 45], "pillar": "庚辰"},
+    "target_years": [{"year": 2026, "age": 36, "pillar": "丙午", "tai_sui_branch": "午"}]
+  },
+  "analysis_options": {
+    "style": "明确断法",
+    "style_profile": "auto",
+    "include_source_lenses": true,
+    "include_disagreement_notes": true,
+    "generate_mingshu": true
+  }
+}

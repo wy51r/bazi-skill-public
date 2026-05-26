@@ -1,0 +1,18 @@
+node_modules/
+.env
+.env.*
+.DS_Store
+Thumbs.db
+*.log
+__pycache__/
+*.pyc
+.venv/
+dist/
+coverage/
+
+# Optional raw source texts. Keep out of public repo unless redistribution is verified.
+skills/bazi/references/sources/
+
+# Local generated reports
+reports/
+*.tmp

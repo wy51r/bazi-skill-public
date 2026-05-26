@@ -1,0 +1,3 @@
+display_name: 八字
+short_description: 从完整排盘 JSON 进行传统八字理法推导和命书生成
+default_prompt: 根据完整排盘 JSON 进行八字理法推导并生成命书
